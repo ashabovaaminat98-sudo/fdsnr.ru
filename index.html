@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -65,6 +65,16 @@
             color: white;
             transform: scale(1.05);
         }
+        /* Стили для скрытой картинки-мема */
+        #meme-img {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px #ffffff;
+        }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -74,36 +84,55 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1>Критическая угроза безопасности</h1>
-        <p>Если вы не нажмете эту кнопку, то удалятся все данные на вашем устройстве!</p>
+    <div class="container" id="box">
+        <h1 id="title">Критическая угроза безопасности</h1>
+        <p id="info">Если вы не нажмете эту кнопку, то удалятся все данные на вашем устройстве!</p>
         
         <div id="timer">15</div>
         
         <button class="danger-btn" id="actionBtn">ОТМЕНИТЬ УДАЛЕНИЕ</button>
+        
+        <!-- Ссылка на картинку-мем (можно заменить на свою) -->
+        <img id="meme-img" src="https://postimg.cc" alt="Мем">
     </div>
 
     <script>
         let timeLeft = 15;
         const timerElement = document.getElementById('timer');
         const btn = document.getElementById('actionBtn');
+        const memeImg = document.getElementById('meme-img');
+        const boxTitle = document.getElementById('title');
+        const boxInfo = document.getElementById('info');
 
+        // Функция, которая убирает таймер и показывает мем
+        function showMeme() {
+            timerElement.style.display = 'none';
+            btn.style.display = 'none';
+            boxTitle.textContent = "ПОПАЛСЯ! 😂";
+            boxTitle.style.color = "#00ff00";
+            boxTitle.style.textShadow = "0 0 10px #00ff00";
+            boxInfo.textContent = "Вас разыграли, никакие данные не удаляются!";
+            memeImg.style.display = 'block'; // Показываем скрытую картинку
+        }
+
+        // Логика работы таймера
         const countdown = setInterval(() => {
             timeLeft--;
             timerElement.textContent = timeLeft;
 
             if (timeLeft <= 0) {
                 clearInterval(countdown);
-                timerElement.textContent = "0";
-                alert("Вас взломали!");
+                showMeme();
             }
         }, 1000);
 
+        // Клик по кнопке
         btn.addEventListener('click', () => {
             clearInterval(countdown);
-            alert("ПОПАЛИСЬ НИГЕРЫ");
+            showMeme();
         });
 
+        // Системное предупреждение при попытке уйти
         window.addEventListener('beforeunload', (event) => {
             event.preventDefault();
             event.returnValue = '';
