@@ -1,10 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Привет!</title>
+    <meta charset="UTF-8">
+    <title>ВНИМАНИЕ! КРИТИЧЕСКАЯ ОШИБКА SYSTEM</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #4a0000 0%, #000000 100%);
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow: hidden;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            border: 3px solid #ff0000;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 30px #ff0000;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 26px;
+            color: #ff3333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        #timer {
+            font-size: 96px;
+            font-weight: bold;
+            color: #ff0000;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+            animation: pulse 1s infinite;
+        }
+        p {
+            color: #ffcccc;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .danger-btn {
+            margin-top: 25px;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #ff0000;
+            color: black;
+            border: 2px solid #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px #ff0000;
+            transition: transform 0.1s;
+        }
+        .danger-btn:hover {
+            background-color: #cc0000;
+            color: white;
+            transform: scale(1.05);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Привет, это мой первый сайт!</h1>
-    <p>Здесь будет какой-то текст для друга.</p>
+
+    <div class="container">
+        <h1>Критическая угроза безопасности</h1>
+        <p>Если вы не нажмете эту кнопку, то удалятся все данные на вашем устройстве!</p>
+        
+        <div id="timer">15</div>
+        
+        <button class="danger-btn" id="actionBtn">ОТМЕНИТЬ УДАЛЕНИЕ</button>
+    </div>
+
+    <script>
+        let timeLeft = 15;
+        const timerElement = document.getElementById('timer');
+        const btn = document.getElementById('actionBtn');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "0";
+                alert("Вас взломали!");
+            }
+        }, 1000);
+
+        btn.addEventListener('click', () => {
+            clearInterval(countdown);
+            alert("Вас взломали!");
+        });
+
+        window.addEventListener('beforeunload', (event) => {
+            event.preventDefault();
+            event.returnValue = '';
+        });
+    </script>
+
 </body>
 </html>
